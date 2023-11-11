@@ -14,7 +14,7 @@ class InputView(private val text: String = Console.readLine()) {
         val menuOrders = text.trim().split(delimiterText)
         val result = mutableListOf<OrderMenu>()
         menuOrders.forEach {
-            Validator.splitInText(it, delimiterNameQuantity)
+            Validator.delimiterInText(it, delimiterNameQuantity)
             val (name, quantity) = it.split(delimiterNameQuantity)
             Validator.convertNumber(quantity)
             result.add(Validator.menuExistence(name, quantity))

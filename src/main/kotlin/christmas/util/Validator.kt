@@ -9,7 +9,7 @@ object Validator {
         require(text.toIntOrNull() != null && text.toInt() >= 1) { ErrorMessage.INVALID_ORDER.getMessage() }
     }
 
-    fun splitInText(text: String, phaser: String) {
+    fun delimiterInText(text: String, phaser: String) {
         require(phaser in text) { ErrorMessage.INVALID_ORDER.getMessage() }
     }
 
