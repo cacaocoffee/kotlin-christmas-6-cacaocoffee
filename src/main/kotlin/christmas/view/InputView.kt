@@ -11,15 +11,20 @@ class InputView(private val text: String = Console.readLine()) {
     }
 
     fun orderMenu(): List<OrderMenu> {
-        val menuOrders = text.trim().split(",")
+        val menuOrders = text.trim().split(delimiterText)
         val result = mutableListOf<OrderMenu>()
         menuOrders.forEach {
-            Validator.splitInText(it,"-")
-            val (name, quantity) = it.split("-")
+            Validator.splitInText(it, delimiterNameQuantity)
+            val (name, quantity) = it.split(delimiterNameQuantity)
             Validator.convertNumber(quantity)
             result.add(Validator.menuExistence(name, quantity))
         }
         Validator.menu(result)
         return result
+    }
+
+    companion object {
+        const val delimiterText = ","
+        const val delimiterNameQuantity = ","
     }
 }
