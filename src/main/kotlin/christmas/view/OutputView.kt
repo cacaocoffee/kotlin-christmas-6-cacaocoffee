@@ -17,6 +17,7 @@ class OutputView {
         printEventBadge()
     }
 
+
     fun printOrder() {
         println()
         println(ORDER_MENU_TITLE)

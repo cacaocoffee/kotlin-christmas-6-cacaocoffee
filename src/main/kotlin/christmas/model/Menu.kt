@@ -1,4 +1,4 @@
-package christmas.util
+package christmas.model
 
 
 data class OrderMenu(val menu: Menu, val quantity : Int)

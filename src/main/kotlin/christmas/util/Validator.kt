@@ -1,5 +1,9 @@
 package christmas.util
 
+import christmas.model.Menu
+import christmas.model.MenuCategory
+import christmas.model.OrderMenu
+
 
 object Validator {
     private val DATE_RANGE = 1..31
