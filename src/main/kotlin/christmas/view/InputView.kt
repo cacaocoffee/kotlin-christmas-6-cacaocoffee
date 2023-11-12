@@ -25,6 +25,6 @@ class InputView(private val text: String = Console.readLine()) {
 
     companion object {
         const val delimiterText = ","
-        const val delimiterNameQuantity = ","
+        const val delimiterNameQuantity = "-"
     }
 }
