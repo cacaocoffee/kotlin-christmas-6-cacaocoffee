@@ -1,24 +1,23 @@
 package christmas.view
 
 class OutputView {
-
-    fun start() {
-        //todo 추후 분리 필요
+    fun printGreeting() {
         println(GREETING_MESSAGE)
-        println(VISIT_DATE_PROMPT)
-        println(ORDER_MENU_PROMPT)
-        println(EVENT_BENEFIT_PREVIEW.format(1))
-        printOrder()
-        printPriceBeforeDiscount()
-        printGift()
-        printEventDescription()
-        printTotalEventAmount()
-        printPriceAfterDiscount()
-        printEventBadge()
     }
 
+    fun printVisitDate() {
+        println(VISIT_DATE_PROMPT)
+    }
 
-    fun printOrder() {
+    fun printOrderMenu() {
+        println(ORDER_MENU_PROMPT)
+    }
+
+    fun printEventBenefit(day: Int) {
+        println(EVENT_BENEFIT_PREVIEW.format(day))
+    }
+
+    fun printTotalOrder() {
         println()
         println(ORDER_MENU_TITLE)
     }
