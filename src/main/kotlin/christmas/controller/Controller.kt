@@ -5,34 +5,33 @@ import christmas.model.OrderMenu
 import christmas.view.InputView
 import christmas.view.OutputView
 
-class Controller() {
-
+class Controller {
     fun run() {
         OutputView().printGreeting()
         val calculator = Calculator(day = inputDate(), orderList = inputMenu())
 
     }
 
-    private fun inputDate(): Int{
-        OutputView().printVisitDate()
+    private fun <T> handleInputException(action: () -> T): T {
         return try {
-            InputView().visitDate()
-        } catch (e: IllegalArgumentException){
+            action()
+        } catch (e: IllegalArgumentException) {
             println(e.message)
-            inputDate()
+            handleInputException(action)
+        } catch (e: IndexOutOfBoundsException) {
+            println(e.message)
+            handleInputException(action)
         }
+    }
+
+    private fun inputDate(): Int {
+        OutputView().printVisitDate()
+        return handleInputException { InputView().visitDate() }
     }
 
     private fun inputMenu(): List<OrderMenu> {
         OutputView().printOrderMenu()
-        return try {
-            InputView().orderMenu()
-        } catch (e: IndexOutOfBoundsException) {
-            println(e.message)
-            inputMenu()
-        } catch (e: IllegalArgumentException) {
-            println(e.message)
-            inputMenu()
-        }
+        return handleInputException { InputView().orderMenu() }
     }
+
 }
