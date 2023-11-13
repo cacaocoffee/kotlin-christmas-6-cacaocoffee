@@ -43,16 +43,16 @@ class CalculaterTest : NsTest() {
     @DisplayName("날짜에 대한 확인")
     @Test
     fun `주말,평일 확인`() {
-        assertThat(Calculator(day = 1).weekend).isEqualTo(true)
-        assertThat(Calculator(day = 2).weekend).isEqualTo(true)
-        assertThat(Calculator(day = 3).weekend).isEqualTo(false)
+        assertThat(Calculator(day = 1, orderList = listOf(OrderMenu(Menu.BBQ_RIBS, 1))).weekend).isEqualTo(true)
+        assertThat(Calculator(day = 2, orderList = listOf(OrderMenu(Menu.BBQ_RIBS, 1))).weekend).isEqualTo(true)
+        assertThat(Calculator(day = 3, orderList = listOf(OrderMenu(Menu.BBQ_RIBS, 1))).weekend).isEqualTo(false)
     }
 
     @Test
     fun `특별한 날 확인`() {
-        assertThat(Calculator(day = 25).specialDay).isEqualTo(true)
-        assertThat(Calculator(day = 3).specialDay).isEqualTo(true)
-        assertThat(Calculator(day = 1).specialDay).isEqualTo(false)
+        assertThat(Calculator(day = 25, orderList = listOf(OrderMenu(Menu.BBQ_RIBS, 1))).specialDay).isEqualTo(true)
+        assertThat(Calculator(day = 3, orderList = listOf(OrderMenu(Menu.BBQ_RIBS, 1))).specialDay).isEqualTo(true)
+        assertThat(Calculator(day = 1, orderList = listOf(OrderMenu(Menu.BBQ_RIBS, 1))).specialDay).isEqualTo(false)
     }
 
     @Test
@@ -101,7 +101,7 @@ class CalculaterTest : NsTest() {
     fun `총 혜택 금액 확인`() {
         assertThat(
             Calculator(
-                day=3,
+                day = 3,
                 orderList = listOf(
                     OrderMenu(Menu.BBQ_RIBS, 1),
                     OrderMenu(Menu.T_BONE_STEAK, 1),
@@ -116,7 +116,7 @@ class CalculaterTest : NsTest() {
     fun `할인후 결제 금액 - 증정`() {
         assertThat(
             Calculator(
-                day=3,
+                day = 3,
                 orderList = listOf(
                     OrderMenu(Menu.BBQ_RIBS, 1),
                     OrderMenu(Menu.T_BONE_STEAK, 1),
@@ -131,7 +131,7 @@ class CalculaterTest : NsTest() {
     fun `할인후 결제 금액 - 증정x`() {
         assertThat(
             Calculator(
-                day=3,
+                day = 3,
                 orderList = listOf(
                     OrderMenu(Menu.CHOCOLATE_CAKE, 1),
                 )
@@ -143,7 +143,7 @@ class CalculaterTest : NsTest() {
     fun `할인후 결제 금액 - 할인 x`() {
         assertThat(
             Calculator(
-                day=3,
+                day = 3,
                 orderList = listOf(
                     OrderMenu(Menu.ICE_CREAM, 1),
                 )

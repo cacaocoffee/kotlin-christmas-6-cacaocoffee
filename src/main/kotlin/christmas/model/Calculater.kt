@@ -18,21 +18,25 @@ data class Calculator(
     val GIFT = Menu.CHAMPAGNE
 
     init {
-        calculateDay()
-        calculatePrices()
-        updateBadge()
+        calculateOriginalPrice()
+        if (originalPrice >= MINIMUM_AMOUNT_FOR_EVENT) {
+            calculateDay()
+            calculateEvent()
+            updateBadge()
+        }
+        discountedPrice = calculateDiscountedPrice()
     }
 
-    private fun calculatePrices() {
+    private fun calculateOriginalPrice(){
         originalPrice = orderList.sumOf { it.menu.price * it.quantity }
-        if (originalPrice >= MINIMUM_AMOUNT_FOR_EVENT) {
-            weekendDiscount = calculateWeekendDiscount() // 요일 할인
-            dayDiscount = calculateDayDiscount() // 크리스마스 디데이 할인
-            calculateGift() // 증정 여부
-            totalEventAmount = calculateTotalDiscountAmount() // 총 혜택 금액
-        }
-        discountedPrice = calculateDiscountedPrice() // 결제 금액
+    }
 
+
+    private fun calculateEvent() {
+        weekendDiscount = calculateWeekendDiscount() // 요일 할인
+        dayDiscount = calculateDayDiscount() // 크리스마스 디데이 할인
+        calculateGift() // 증정 여부
+        totalEventAmount = calculateTotalDiscountAmount() // 총 혜택 금액
     }
 
     private fun calculateDayDiscount(): Int {
