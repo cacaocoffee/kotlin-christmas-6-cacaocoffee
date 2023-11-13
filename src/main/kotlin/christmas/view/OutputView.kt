@@ -63,7 +63,7 @@ class OutputView {
         const val VISIT_DATE_PROMPT = "12월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)"
         const val ORDER_MENU_PROMPT = "주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)"
         const val EVENT_BENEFIT_PREVIEW = "12월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!"
-        const val ORDER_MENU_TITLE = "<주문 내역>"
+        const val ORDER_MENU_TITLE = "<주문 메뉴>"
         const val PRICE_BEFORE_DISCOUNT_TITLE = "<할인 전 총주문 금액>"
         const val GIFT_MENU_TITLE = "<증정 메뉴>"
         const val EVENT_DESCRIPTION_TITLE = "<혜택 내역>"
