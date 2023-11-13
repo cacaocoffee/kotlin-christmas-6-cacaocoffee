@@ -6,7 +6,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-class InputViewTest : NsTest() {
+class InputTest : NsTest() {
     @Test
     fun `날짜에 대한 입력이 잘들어 갔는지 테스트`() {
         assertThat(InputView("3").visitDate()).isEqualTo(3)
