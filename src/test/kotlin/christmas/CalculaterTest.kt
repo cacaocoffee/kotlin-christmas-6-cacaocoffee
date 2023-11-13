@@ -7,6 +7,8 @@ import christmas.model.OrderMenu
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 
 class CalculaterTest : NsTest() {
@@ -40,12 +42,17 @@ class CalculaterTest : NsTest() {
         ).isEqualTo(1200)
     }
 
-    @DisplayName("날짜에 대한 확인")
-    @Test
-    fun `주말,평일 확인`() {
-        assertThat(Calculator(day = 1, orderList = listOf(OrderMenu(Menu.BBQ_RIBS, 1))).weekend).isEqualTo(true)
-        assertThat(Calculator(day = 2, orderList = listOf(OrderMenu(Menu.BBQ_RIBS, 1))).weekend).isEqualTo(true)
-        assertThat(Calculator(day = 3, orderList = listOf(OrderMenu(Menu.BBQ_RIBS, 1))).weekend).isEqualTo(false)
+
+    @ParameterizedTest
+    @ValueSource(ints = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31])
+    @DisplayName("모든 날짜에 대한 주말 평일 확인")
+    fun `주말,평일 확인`(day: Int): String {
+        //given
+        val calculator = Calculator(day, listOf(OrderMenu(Menu.BBQ_RIBS, 1)))
+
+        //when & then
+        if (day % 7 == 2 || day % 7 == 1) return assertThat(calculator.weekend).isEqualTo(true).toString()
+        return assertThat(calculator.weekend).isEqualTo(false).toString()
     }
 
     @Test
