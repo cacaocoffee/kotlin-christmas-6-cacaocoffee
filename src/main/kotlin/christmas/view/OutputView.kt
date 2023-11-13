@@ -27,9 +27,10 @@ class OutputView {
         println("${order.menu.menuName} ${order.quantity}개")
     }
 
-    fun printPriceBeforeDiscount() {
+    fun printPriceBeforeDiscount(originalPrice: String) {
         println()
         println(PRICE_BEFORE_DISCOUNT_TITLE)
+        println("${originalPrice}원")
     }
 
     fun printEventDescription() {
