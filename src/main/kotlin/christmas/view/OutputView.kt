@@ -1,5 +1,7 @@
 package christmas.view
 
+import christmas.model.OrderMenu
+
 class OutputView {
     fun printGreeting() {
         println(GREETING_MESSAGE)
@@ -33,9 +35,10 @@ class OutputView {
         println("${originalPrice}원")
     }
 
-    fun printEventDescription() {
+    fun printEventDescription(descriptorInfo: List<String>) {
         println()
         println(EVENT_DESCRIPTION_TITLE)
+        descriptorInfo.forEach { println(it) }
     }
 
     fun printGift() {
