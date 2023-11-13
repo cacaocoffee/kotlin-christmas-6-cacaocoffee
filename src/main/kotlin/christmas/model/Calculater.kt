@@ -27,7 +27,7 @@ data class Calculator(
         discountedPrice = calculateDiscountedPrice()
     }
 
-    private fun calculateOriginalPrice(){
+    private fun calculateOriginalPrice() {
         originalPrice = orderList.sumOf { it.menu.price * it.quantity }
     }
 

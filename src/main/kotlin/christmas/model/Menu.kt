@@ -1,7 +1,7 @@
 package christmas.model
 
 
-data class OrderMenu(val menu: Menu, val quantity : Int)
+data class OrderMenu(val menu: Menu, val quantity: Int)
 enum class MenuCategory {
     APPETIZER, MAIN, DESSERT, BEVERAGE
 }

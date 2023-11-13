@@ -43,11 +43,11 @@ class Controller {
         return handleInputException { InputView().orderMenu() }
     }
 
-    private fun outputGift(gift: Boolean) :String {
+    private fun outputGift(gift: Boolean): String {
         return if (gift) "${Menu.CHAMPAGNE.menuName} 1개" else "없음"
     }
 
-    private fun totalEvent(calculator: Calculator) :List<String> {
+    private fun totalEvent(calculator: Calculator): List<String> {
         val result = calculateEvent(calculator)
         if (result.isEmpty()) result.add(NONE)
         return result
