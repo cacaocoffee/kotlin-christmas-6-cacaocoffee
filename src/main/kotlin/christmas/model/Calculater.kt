@@ -4,16 +4,19 @@ data class Calculator(
     var day: Int = 0,
     var orderList: List<OrderMenu> = emptyList(),
     var originalPrice: Int = 0,
+
     var weekendDiscount: Int = 0,
     var dayDiscount: Int = 0,
     var discountedPrice: Int = 0,
-    var totalDiscountedAmount: Int = 0,
+    var totalEventAmount: Int = 0,
 
     var gift: Boolean = false,
     var badge: String = "없음",
     var specialDay: Boolean = false,
     var weekend: Boolean = false
 ) {
+    val GIFT = Menu.CHAMPAGNE
+
     init {
         calculateDay()
         calculatePrices()
@@ -26,7 +29,7 @@ data class Calculator(
             weekendDiscount = calculateWeekendDiscount() // 요일 할인
             dayDiscount = calculateDayDiscount() // 크리스마스 디데이 할인
             calculateGift() // 증정 여부
-            totalDiscountedAmount = calculateTotalDiscountAmount() // 총 혜택 금액
+            totalEventAmount = calculateTotalDiscountAmount() // 총 혜택 금액
         }
         discountedPrice = calculateDiscountedPrice() // 결제 금액
 
@@ -43,31 +46,31 @@ data class Calculator(
 
     private fun updateBadge() {
         badge = when {
-            discountedPrice >= BADGE_SANTA -> "산타"
-            discountedPrice >= BADGE_TREE -> "트리"
-            discountedPrice >= BADGE_STAR -> "별"
+            totalEventAmount >= BADGE_SANTA -> "산타"
+            totalEventAmount >= BADGE_TREE -> "트리"
+            totalEventAmount >= BADGE_STAR -> "별"
             else -> "없음"
         }
     }
 
     private fun calculateDiscountedPrice(): Int {
-        return originalPrice - totalDiscountedAmount
+        if (gift) return originalPrice - totalEventAmount + GIFT.price
+        return originalPrice - totalEventAmount
     }
 
     private fun calculateTotalDiscountAmount(): Int {
         var result = 0
         if (specialDay) result += SPECIAL_DISCOUNT
-        if (gift) result -= Menu.CHAMPAGNE.price
+        if (gift) result += GIFT.price
         result += weekendDiscount + dayDiscount
         return result
     }
 
     private fun calculateWeekendDiscount(): Int {
         var result = 0
-        if (originalPrice >= MINIMUM_ORDER_AMOUNT_FOR_DISCOUNT) return result
         orderList.forEach {
-            if (it.menu.category == MenuCategory.DESSERT && !weekend) result += 2023
-            if (it.menu.category == MenuCategory.MAIN && weekend) result += 2023
+            if (it.menu.category == MenuCategory.DESSERT && !weekend) result += DAY_DISCOUNT_AMOUNT * it.quantity
+            if (it.menu.category == MenuCategory.MAIN && weekend) result += DAY_DISCOUNT_AMOUNT * it.quantity
         }
         return result
     }
@@ -77,6 +80,7 @@ data class Calculator(
     }
 
     companion object {
+        const val DAY_DISCOUNT_AMOUNT = 2023
         const val BADGE_SANTA = 20_000
         const val BADGE_TREE = 10_000
         const val BADGE_STAR = 5_000
@@ -86,8 +90,8 @@ data class Calculator(
         const val SPECIAL_DISCOUNT = 1_000
         const val DEFAULT_DISCOUNT = 1_000
         const val ADDITIONAL_DISCOUNT_PER_DAY = 100
-        const val MINIMUM_ORDER_AMOUNT_FOR_DISCOUNT = 1_000
         const val MINIMUM_ORDER_AMOUNT_FOR_GIFT = 120_000
         const val MINIMUM_AMOUNT_FOR_EVENT = 10_000
+
     }
 }
