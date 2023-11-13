@@ -7,7 +7,7 @@ import christmas.model.OrderMenu
 
 object Validator {
     private val DATE_RANGE = 1..31
-    private val MAX_QUANTITY = 20
+    private const val MAX_QUANTITY = 20
 
     fun convertNumber(text: String) {
         require(text.toIntOrNull() != null && text.toInt() >= 1) { ErrorMessage.INVALID_ORDER.getMessage() }
