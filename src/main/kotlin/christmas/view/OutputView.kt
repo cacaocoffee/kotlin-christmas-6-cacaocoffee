@@ -48,19 +48,22 @@ class OutputView {
     }
 
 
-    fun printTotalEventAmount() {
+    fun printTotalEventAmount(amount: String) {
         println()
         println(TOTAL_EVENT_AMOUNT_TITLE)
+        println("${amount}원")
     }
 
-    fun printPriceAfterDiscount() {
+    fun printPriceAfterDiscount(price:String) {
         println()
         println(PRICE_AFTER_DISCOUNT_TITLE)
+        println("${price}원")
     }
 
-    fun printEventBadge() {
+    fun printEventBadge(badge: String) {
         println()
         println(EVENT_BADGE_TITLE)
+        println(badge)
     }
 
     companion object {
@@ -72,8 +75,8 @@ class OutputView {
         const val PRICE_BEFORE_DISCOUNT_TITLE = "<할인 전 총주문 금액>"
         const val GIFT_MENU_TITLE = "<증정 메뉴>"
         const val EVENT_DESCRIPTION_TITLE = "<혜택 내역>"
-        const val TOTAL_EVENT_AMOUNT_TITLE = "<총 혜택 금액>"
-        const val PRICE_AFTER_DISCOUNT_TITLE = "<할인 후 예상 금액>"
+        const val TOTAL_EVENT_AMOUNT_TITLE = "<총혜택 금액>"
+        const val PRICE_AFTER_DISCOUNT_TITLE = "<할인 후 예상 결제 금액>"
         const val EVENT_BADGE_TITLE = "<12월 이벤트 배지>"
     }
 }

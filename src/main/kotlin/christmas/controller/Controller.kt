@@ -7,14 +7,18 @@ import christmas.view.InputView
 import christmas.view.OutputView
 
 class Controller {
+
     fun run() {
         OutputView().printGreeting()
         val calculator = Calculator(day = inputDate(), orderList = inputMenu())
-        outputEventBenefit(calculator.day)
+        OutputView().printEventBenefit(calculator.day)
         OutputView().printTotalOrder(calculator.orderList)
         OutputView().printPriceBeforeDiscount(printNumberWithComma(calculator.originalPrice))
         outputGift(calculator.gift)
         totalEvent(calculator)
+        totalEventAmount(calculator)
+        OutputView().printEventBadge(calculator.badge)
+        OutputView().printPriceAfterDiscount(printNumberWithComma(calculator.discountedPrice))
     }
 
     private fun <T> handleInputException(action: () -> T): T {
@@ -39,20 +43,19 @@ class Controller {
         return handleInputException { InputView().orderMenu() }
     }
 
-    private fun outputEventBenefit(day: Int) {
-        OutputView().printEventBenefit(day)
-    }
-
     private fun outputGift(gift: Boolean) {
         val giftText = if (gift) "${Menu.CHAMPAGNE.menuName} 1개" else "없음"
         OutputView().printGift(giftText)
     }
 
-
     private fun totalEvent(calculator: Calculator) {
         val result = calculateEvent(calculator)
         if (result.isEmpty()) result.add(NONE)
         OutputView().printEventDescription(result)
+    }
+
+    private fun totalEventAmount(calculator: Calculator) {
+        OutputView().printTotalEventAmount("-${printNumberWithComma(calculator.totalEventAmount)}")
     }
 
     private fun calculateEvent(calculator: Calculator): MutableList<String> {
