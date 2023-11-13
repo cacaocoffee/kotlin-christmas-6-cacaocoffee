@@ -17,9 +17,14 @@ class OutputView {
         println(EVENT_BENEFIT_PREVIEW.format(day))
     }
 
-    fun printTotalOrder() {
+    fun printTotalOrder(order: List<OrderMenu>) {
         println()
         println(ORDER_MENU_TITLE)
+        order.forEach { printOneOrder(it) }
+    }
+
+    private fun printOneOrder(order: OrderMenu) {
+        println("${order.menu.menuName} ${order.quantity}개")
     }
 
     fun printPriceBeforeDiscount() {
