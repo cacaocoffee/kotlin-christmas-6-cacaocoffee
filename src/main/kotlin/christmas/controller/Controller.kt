@@ -58,21 +58,15 @@ class Controller {
     private fun calculateEvent(calculator: Calculator): MutableList<String> {
         val result = mutableListOf<String>()
         if (calculator.dayDiscount > 0) result.add(event(CHRISTMAS_DAY_EVENT, calculator.dayDiscount))
-        if (calculator.weekendDiscount > 0 && calculator.weekend) result.add(
-            event(
-                WEEKEND_DISCOUNT,
-                calculator.weekendDiscount
-            )
-        )
-        if (calculator.weekendDiscount > 0 && !calculator.weekend) result.add(
-            event(
-                DAY_DISCOUNT,
-                calculator.weekendDiscount
-            )
-        )
+        if (calculator.weekendDiscount > 0) result.add(weeklyDiscount(calculator))
         if (calculator.specialDay) result.add(event(SPECIAL_DISCOUNT, Calculator.SPECIAL_DISCOUNT))
         if (calculator.gift) result.add(event(GIFT_EVENT, calculator.GIFT.price))
         return result
+    }
+
+    private fun weeklyDiscount(calculator: Calculator): String {
+        if (calculator.weekend) return event(WEEKEND_DISCOUNT, calculator.weekendDiscount)
+        return event(DAY_DISCOUNT, calculator.weekendDiscount)
     }
 
     private fun event(description: String, discount: Int): String = "$description-${printNumberWithComma(discount)}원"
