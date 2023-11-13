@@ -41,9 +41,10 @@ class OutputView {
         descriptorInfo.forEach { println(it) }
     }
 
-    fun printGift() {
+    fun printGift(gift: String) {
         println()
         println(GIFT_MENU_TITLE)
+        println(gift)
     }
 
 
