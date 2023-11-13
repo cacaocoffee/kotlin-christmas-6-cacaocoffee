@@ -14,9 +14,9 @@ class Controller {
         OutputView().printEventBenefit(calculator.day)
         OutputView().printTotalOrder(calculator.orderList)
         OutputView().printPriceBeforeDiscount(printNumberWithComma(calculator.originalPrice))
-        outputGift(calculator.gift)
-        totalEvent(calculator)
-        totalEventAmount(calculator)
+        OutputView().printGift(outputGift(calculator.gift))
+        OutputView().printEventDescription(totalEvent(calculator))
+        OutputView().printTotalEventAmount(totalEventAmount(calculator))
         OutputView().printEventBadge(calculator.badge)
         OutputView().printPriceAfterDiscount(printNumberWithComma(calculator.discountedPrice))
     }
@@ -43,19 +43,18 @@ class Controller {
         return handleInputException { InputView().orderMenu() }
     }
 
-    private fun outputGift(gift: Boolean) {
-        val giftText = if (gift) "${Menu.CHAMPAGNE.menuName} 1개" else "없음"
-        OutputView().printGift(giftText)
+    private fun outputGift(gift: Boolean) :String {
+        return if (gift) "${Menu.CHAMPAGNE.menuName} 1개" else "없음"
     }
 
-    private fun totalEvent(calculator: Calculator) {
+    private fun totalEvent(calculator: Calculator) :List<String> {
         val result = calculateEvent(calculator)
         if (result.isEmpty()) result.add(NONE)
-        OutputView().printEventDescription(result)
+        return result
     }
 
-    private fun totalEventAmount(calculator: Calculator) {
-        OutputView().printTotalEventAmount("-${printNumberWithComma(calculator.totalEventAmount)}")
+    private fun totalEventAmount(calculator: Calculator): String {
+        return "-${printNumberWithComma(calculator.totalEventAmount)}"
     }
 
     private fun calculateEvent(calculator: Calculator): MutableList<String> {
