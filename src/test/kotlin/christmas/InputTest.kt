@@ -5,6 +5,8 @@ import christmas.view.InputView
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 class InputTest : NsTest() {
     @Test
@@ -12,49 +14,20 @@ class InputTest : NsTest() {
         assertThat(InputView("3").visitDate()).isEqualTo(3)
     }
 
-    @Test
-    fun `날짜에 대한 입력 예외 테스트`() {
+    @ParameterizedTest
+    @ValueSource(strings = ["45", "a", "-1", "1.4", "0", "32","","\\"])
+    fun `날짜에 대한 입력 예외 테스트`(text:String) {
         assertThrows<IllegalArgumentException> {
-            InputView("45").visitDate()
-        }
-        assertThrows<IllegalArgumentException> {
-            InputView("a").visitDate()
-        }
-        assertThrows<IllegalArgumentException> {
-            InputView("-1").visitDate()
-        }
-        assertThrows<IllegalArgumentException> {
-            InputView("1.4").visitDate()
+            InputView(text).visitDate()
         }
     }
 
-    @Test
-    fun `음식 주문에 대한 예외 테스트`() {
+    @ParameterizedTest
+    @ValueSource(strings = ["티본스테이크-2,티본스테이크-1","제로콜라-10","티본스테이크-21","티본스테이크 1,제로콜라 3 ","","티본스테이크,-3",",,","1-티본스테이크,1-제로콜라"])
+    fun `음식 주문에 대한 예외 테스트`(text: String) {
         assertThrows<IllegalArgumentException> {
-            InputView("티본스테이크-2,티본스테이크-1").orderMenu()
+            InputView(text).orderMenu()
         }
-        assertThrows<IllegalArgumentException> {
-            InputView("제로콜라-10").orderMenu()
-        }
-        assertThrows<IllegalArgumentException> {
-            InputView("티본스테이크-21").orderMenu()
-        }
-        assertThrows<IllegalArgumentException> {
-            InputView("").orderMenu()
-        }
-        assertThrows<IllegalArgumentException> {
-            InputView("하늘을 우러러 한 점 부끄럼 없기를-3,").orderMenu()
-        }
-        assertThrows<IllegalArgumentException> {
-            InputView("티본스테이크 1,제로콜라 3 ").orderMenu()
-        }
-        assertThrows<IllegalArgumentException> {
-            InputView(",,").orderMenu()
-        }
-        assertThrows<IllegalArgumentException> {
-            InputView("1-티본스테이크,1-제로콜라").orderMenu()
-        }
-
     }
 
     override fun runMain() {
