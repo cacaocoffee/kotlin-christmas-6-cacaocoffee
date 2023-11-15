@@ -5,10 +5,12 @@ import christmas.model.Calculator
 import christmas.model.Menu
 import christmas.model.OrderMenu
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
 
@@ -56,11 +58,14 @@ class CalculaterTest : NsTest() {
         return assertThat(calculator.weekend).isEqualTo(false).toString()
     }
 
-    @Test
-    fun `특별한 날 확인`() {
-        assertThat(Calculator(day = 25, orderList = order).specialDay).isEqualTo(true)
-        assertThat(Calculator(day = 3, orderList = order).specialDay).isEqualTo(true)
-        assertThat(Calculator(day = 1, orderList = order).specialDay).isEqualTo(false)
+    @ParameterizedTest
+    @CsvSource("25,true", "3,true", "1,false")
+    fun `특별한 날 확인`(day: Int, expected: Boolean) {
+        // given
+        val calculator = Calculator(day = day, orderList = order)
+
+        // when & then
+        assertThat(calculator.specialDay).isEqualTo(expected)
     }
 
     @Test
@@ -113,6 +118,25 @@ class CalculaterTest : NsTest() {
                 orderList = order
             ).discountedPrice
         ).isEqualTo(135754)
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = [20000, 10000, 5000, 4999])
+    fun `뱃지 테스트`(price: Int) {
+        // given
+        val calculator = Calculator(day = 3, orderList = order)
+
+        // when
+        calculator.updateBadge(price)
+        val expectedBadge = when {
+            price >= Calculator.BADGE_SANTA -> "산타"
+            price >= Calculator.BADGE_TREE -> "트리"
+            price >= Calculator.BADGE_STAR -> "별"
+            else -> "없음"
+        }
+
+        // then
+        assertEquals(expectedBadge, calculator.badge)
     }
 
     @Test
