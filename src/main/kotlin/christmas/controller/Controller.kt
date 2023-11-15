@@ -44,7 +44,7 @@ class Controller {
     }
 
     private fun outputGift(gift: Boolean): String {
-        return if (gift) "${Menu.CHAMPAGNE.menuName} 1개" else "없음"
+        return if (gift) "${Menu.CHAMPAGNE.menuName} 1개" else NONE
     }
 
     private fun totalEvent(calculator: Calculator): List<String> {
@@ -72,7 +72,7 @@ class Controller {
     }
 
     private fun event(description: String, discount: Int): String =
-        "$description${printNumberWithComma(-1 * discount)}원"
+        "$description${printNumberWithComma(-1 * discount)}"+UNIT_MONEY
 
     private fun printNumberWithComma(number: Int): String {
         return String.format("%,d", number)
@@ -85,5 +85,6 @@ class Controller {
         const val SPECIAL_DISCOUNT = "특별 할인: "
         const val GIFT_EVENT = "증정 이벤트: "
         const val NONE = "없음"
+        const val UNIT_MONEY = "원"
     }
 }
