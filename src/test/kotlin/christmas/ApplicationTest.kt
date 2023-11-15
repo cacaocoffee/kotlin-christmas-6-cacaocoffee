@@ -47,6 +47,39 @@ class ApplicationTest : NsTest() {
         }
     }
 
+    @Test
+    fun `10000원 이하 금액 총혜택 금액`() {
+        assertSimpleTest {
+            run("3", "아이스크림-1")
+            assertThat(output()).contains(
+                "<총혜택 금액>",
+                "0원"
+            )
+        }
+    }
+
+    @Test
+    fun `전체 테스트`() {
+        assertSimpleTest {
+            run("3", "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1")
+            assertThat(output()).contains(
+                "<주문 메뉴>",
+                "<할인 전 총주문 금액",
+
+                "<증정 메뉴>",
+                "샴페인 1개",
+                "<혜택 내역>",
+                "크리스마스 디데이 할인: -1,200원",
+                "평일 할인: -4,046원",
+                "특별 할인: -1,000원",
+                "증정 이벤트: -25,000원",
+                "<총혜택 금액>",
+                "<할인 후 예상 결제 금액>",
+                "<12월 이벤트 배지>"
+            )
+        }
+    }
+
     override fun runMain() {
         main()
     }
