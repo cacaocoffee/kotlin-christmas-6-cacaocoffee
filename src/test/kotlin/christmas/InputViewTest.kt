@@ -8,7 +8,7 @@ import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
-class InputTest : NsTest() {
+class InputViewTest : NsTest() {
     @Test
     fun `날짜에 대한 입력이 잘들어 갔는지 테스트`() {
         assertThat(InputView("3").visitDate()).isEqualTo(3)
