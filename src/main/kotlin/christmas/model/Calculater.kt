@@ -1,20 +1,18 @@
 package christmas.model
 
 data class Calculator(
-    var day: Int = 0,
-    var orderList: List<OrderMenu> = emptyList(),
-    var originalPrice: Int = 0,
-
-    var weekendDiscount: Int = 0,
-    var dayDiscount: Int = 0,
-    var discountedPrice: Int = 0,
-    var totalEventAmount: Int = 0,
-
-    var gift: Boolean = false,
-    var badge: String = "없음",
-    var specialDay: Boolean = false,
-    var weekend: Boolean = false
+    val day: Int = 0,
+    val orderList: List<OrderMenu> = emptyList()
 ) {
+    var originalPrice: Int = 0
+    var weekendDiscount: Int = 0
+    var dayDiscount: Int = 0
+    var discountedPrice: Int = 0
+    var totalEventAmount: Int = 0
+    var gift: Boolean = false
+    var badge: String = "없음"
+    var specialDay: Boolean = false
+    var weekend: Boolean = false
     val GIFT = Menu.CHAMPAGNE
 
     init {
@@ -22,7 +20,7 @@ data class Calculator(
         if (originalPrice >= MINIMUM_AMOUNT_FOR_EVENT) {
             calculateDay()
             calculateEvent()
-            updateBadge()
+            updateBadge(totalEventAmount)
         }
         discountedPrice = calculateDiscountedPrice()
     }
@@ -48,11 +46,11 @@ data class Calculator(
         specialDay = day % 7 == SPECIAL_DAY || day == CHRISTMAS
     }
 
-    private fun updateBadge() {
+    fun updateBadge(number: Int) {
         badge = when {
-            totalEventAmount >= BADGE_SANTA -> "산타"
-            totalEventAmount >= BADGE_TREE -> "트리"
-            totalEventAmount >= BADGE_STAR -> "별"
+            number >= BADGE_SANTA -> "산타"
+            number >= BADGE_TREE -> "트리"
+            number >= BADGE_STAR -> "별"
             else -> "없음"
         }
     }
@@ -96,6 +94,5 @@ data class Calculator(
         const val ADDITIONAL_DISCOUNT_PER_DAY = 100
         const val MINIMUM_ORDER_AMOUNT_FOR_GIFT = 120_000
         const val MINIMUM_AMOUNT_FOR_EVENT = 10_000
-
     }
 }
