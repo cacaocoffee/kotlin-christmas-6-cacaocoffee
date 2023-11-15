@@ -54,7 +54,7 @@ class Controller {
     }
 
     private fun totalEventAmount(calculator: Calculator): String {
-        return "-${printNumberWithComma(calculator.totalEventAmount)}"
+        return printNumberWithComma(-1 * calculator.totalEventAmount)
     }
 
     private fun calculateEvent(calculator: Calculator): MutableList<String> {
@@ -71,15 +71,11 @@ class Controller {
         return event(DAY_DISCOUNT, calculator.weekendDiscount)
     }
 
-    private fun event(description: String, discount: Int): String = "$description-${printNumberWithComma(discount)}원"
+    private fun event(description: String, discount: Int): String =
+        "$description${printNumberWithComma(-1 * discount)}원"
 
     private fun printNumberWithComma(number: Int): String {
-        if (number >= 1000) {
-            if (number % 1000 < 9) return printNumberWithComma(number / 1000) + ",00" + (number % 1000).toString()
-            if (number % 1000 < 99) return printNumberWithComma(number / 1000) + ",0" + (number % 1000).toString()
-            return printNumberWithComma(number / 1000) + "," + (number % 1000).toString()
-        }
-        return number.toString()
+        return String.format("%,d", number)
     }
 
     companion object {
