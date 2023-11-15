@@ -5,6 +5,7 @@ import christmas.model.Calculator
 import christmas.model.Menu
 import christmas.model.OrderMenu
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -13,16 +14,21 @@ import org.junit.jupiter.params.provider.ValueSource
 
 class CalculaterTest : NsTest() {
 
+    private val order = mutableListOf<OrderMenu>()
+
+    @BeforeEach
+    fun setUp() {
+        order.add(OrderMenu(Menu.BBQ_RIBS, 1))
+        order.add(OrderMenu(Menu.T_BONE_STEAK, 1))
+        order.add(OrderMenu(Menu.CHOCOLATE_CAKE, 2))
+        order.add(OrderMenu(Menu.ZERO_COLA, 1))
+    }
+
     @Test
     fun `할인 전 금액 확인`() {
         assertThat(
             Calculator(
-                orderList = listOf(
-                    OrderMenu(Menu.BBQ_RIBS, 1),
-                    OrderMenu(Menu.T_BONE_STEAK, 1),
-                    OrderMenu(Menu.CHOCOLATE_CAKE, 2),
-                    OrderMenu(Menu.ZERO_COLA, 1)
-                )
+                orderList = order
             ).originalPrice
         ).isEqualTo(142000)
     }
@@ -32,12 +38,7 @@ class CalculaterTest : NsTest() {
         assertThat(
             Calculator(
                 day = 3,
-                orderList = listOf(
-                    OrderMenu(Menu.BBQ_RIBS, 1),
-                    OrderMenu(Menu.T_BONE_STEAK, 1),
-                    OrderMenu(Menu.CHOCOLATE_CAKE, 2),
-                    OrderMenu(Menu.ZERO_COLA, 1)
-                )
+                orderList = order
             ).dayDiscount
         ).isEqualTo(1200)
     }
@@ -57,9 +58,9 @@ class CalculaterTest : NsTest() {
 
     @Test
     fun `특별한 날 확인`() {
-        assertThat(Calculator(day = 25, orderList = listOf(OrderMenu(Menu.BBQ_RIBS, 1))).specialDay).isEqualTo(true)
-        assertThat(Calculator(day = 3, orderList = listOf(OrderMenu(Menu.BBQ_RIBS, 1))).specialDay).isEqualTo(true)
-        assertThat(Calculator(day = 1, orderList = listOf(OrderMenu(Menu.BBQ_RIBS, 1))).specialDay).isEqualTo(false)
+        assertThat(Calculator(day = 25, orderList = order).specialDay).isEqualTo(true)
+        assertThat(Calculator(day = 3, orderList = order).specialDay).isEqualTo(true)
+        assertThat(Calculator(day = 1, orderList = order).specialDay).isEqualTo(false)
     }
 
     @Test
@@ -67,12 +68,7 @@ class CalculaterTest : NsTest() {
         assertThat(
             Calculator(
                 day = 3,
-                orderList = listOf(
-                    OrderMenu(Menu.BBQ_RIBS, 1),
-                    OrderMenu(Menu.T_BONE_STEAK, 1),
-                    OrderMenu(Menu.CHOCOLATE_CAKE, 2),
-                    OrderMenu(Menu.ZERO_COLA, 1)
-                )
+                orderList = order
             ).weekendDiscount
         ).isEqualTo(4046)
         //주말
@@ -93,12 +89,7 @@ class CalculaterTest : NsTest() {
     fun `증정 확인`() {
         assertThat(
             Calculator(
-                orderList = listOf(
-                    OrderMenu(Menu.BBQ_RIBS, 1),
-                    OrderMenu(Menu.T_BONE_STEAK, 1),
-                    OrderMenu(Menu.CHOCOLATE_CAKE, 2),
-                    OrderMenu(Menu.ZERO_COLA, 1)
-                )
+                orderList = order
             ).gift
         ).isEqualTo(true)
     }
@@ -109,12 +100,7 @@ class CalculaterTest : NsTest() {
         assertThat(
             Calculator(
                 day = 3,
-                orderList = listOf(
-                    OrderMenu(Menu.BBQ_RIBS, 1),
-                    OrderMenu(Menu.T_BONE_STEAK, 1),
-                    OrderMenu(Menu.CHOCOLATE_CAKE, 2),
-                    OrderMenu(Menu.ZERO_COLA, 1)
-                )
+                orderList = order
             ).totalEventAmount
         ).isEqualTo(31246)
     }
@@ -124,12 +110,7 @@ class CalculaterTest : NsTest() {
         assertThat(
             Calculator(
                 day = 3,
-                orderList = listOf(
-                    OrderMenu(Menu.BBQ_RIBS, 1),
-                    OrderMenu(Menu.T_BONE_STEAK, 1),
-                    OrderMenu(Menu.CHOCOLATE_CAKE, 2),
-                    OrderMenu(Menu.ZERO_COLA, 1)
-                )
+                orderList = order
             ).discountedPrice
         ).isEqualTo(135754)
     }
@@ -162,7 +143,4 @@ class CalculaterTest : NsTest() {
 
     }
 
-    companion object {
-        private val LINE_SEPARATOR = System.lineSeparator()
-    }
 }
